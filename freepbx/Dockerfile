@@ -60,7 +60,7 @@ RUN tar vxfz jansson.tar.gz && \
 RUN tar xvfz asterisk-13-current.tar.gz && \
   rm -f asterisk-13-current.tar.gz && \
   cd asterisk-* && \
-  ./configure && \
+  PTLIB_CONFIG=/usr/lib/pkgconfig ./configure && \
   contrib/scripts/get_mp3_source.sh && \
 	make menuselect.makeopts && \
   make && \
