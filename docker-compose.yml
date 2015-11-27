@@ -1,0 +1,14 @@
+freepbx:
+  build: freepbx
+  hostname: asterisk
+  links:
+    - mysql
+  command: sleep infinity
+mysql:
+  image: mysql:5
+  environment:
+    - MYSQL_ROOT_PASSWORD=root
+  volumes:
+    - ./data/mysql:/var/lib/mysql
+apache:
+  image: httpd:2.4
