@@ -27,19 +27,21 @@ libpopt-dev libpq-dev libradiusclient-ng-dev libresample-dev libsnmp-dev \
 libspandsp-dev libspeex-dev libspeexdsp-dev libsqlite0-dev libsqlite3-dev \
 libsrtp-dev libsrtp0-dev libssl-dev libtool libusb-dev libvorbis-dev libvpb-dev \
 libxml2-dev libxslt1-dev libz-dev lua5.1 mpg123 mysql-client pkg-config \
-portaudio19-dev sox sqlite3 subversion unixodbc-dev uuid uuid-dev
+portaudio19-dev sox sqlite3 subversion unixodbc-dev uuid uuid-dev wget
 
 #Download all needed items
 RUN axel http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz && \
-  axel http://downloads.asterisk.org/pub/telephony/libpri/libpri-1.4-current.tar.gz && \
+  axel http://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz && \
   axel http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-13-current.tar.gz && \
   axel -o jansson.tar.gz http://www.digip.org/jansson/releases/jansson-2.7.tar.gz && \
-  axel http://www.pjsip.org/release/2.4/pjproject-2.4.tar.bz2
+  wget https://github.com/pjsip/pjproject/archive/2.10.tar.gz
 
 #install pjproject
-  RUN tar -xjvf pjproject-2.4.tar.bz2 && \
-    rm -f pjproject-2.4.tar.bz2 && \
-    cd pjproject-2.4 && \
+  RUN mv ./2.10.tar.gz ./pjproject-2.10.tar.gz
+
+  RUN tar -xf ./pjproject-2.10.tar.gz && \
+    rm -f pjproject-2.10.tar.gz && \
+    cd pjproject-2.10 && \
     CFLAGS='-DPJ_HAS_IPV6=1' ./configure --enable-shared --disable-sound \
     --disable-resample --disable-video --disable-opencore-amr && \
     make dep && \
